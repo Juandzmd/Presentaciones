@@ -19,7 +19,7 @@ const SeguridadEv4 = () => {
         // Setup chatbot after plugin loads
         script1.onload = () => {
             const script2 = document.createElement('script');
-            script2.innerHTML = `ktt10.setup({id:"KlCn2QUhdL4lUs98d3y",accountId:"1878178",color:"#0954CD"})`;
+            script2.innerHTML = `ktt10.setup({id:"z8Tn7uNnAfNPfIPvsVrY",accountId:"1754827",color:"#0777FF"})`;
             document.body.appendChild(script2);
         };
 
