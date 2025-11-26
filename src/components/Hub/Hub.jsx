@@ -82,7 +82,7 @@ const Hub = () => {
         e.stopPropagation();
         setSubjects(prev => prev.map(sub => {
             if (sub.id === subjectId) {
-                return {
+                const updatedSubject = {
                     ...sub,
                     presentations: sub.presentations.map(pres =>
                         pres.id === presentationId
@@ -90,6 +90,11 @@ const Hub = () => {
                             : pres
                     )
                 };
+                // Update selectedSubject if it's the current one
+                if (selectedSubject && selectedSubject.id === subjectId) {
+                    setSelectedSubject(updatedSubject);
+                }
+                return updatedSubject;
             }
             return sub;
         }));
@@ -156,8 +161,8 @@ const Hub = () => {
                                             key={year}
                                             onClick={() => setSelectedYear(year)}
                                             className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 border group ${selectedYear === year
-                                                    ? 'bg-gold-500/10 border-gold-500/50 text-gold-400'
-                                                    : 'bg-transparent border-transparent text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                                                ? 'bg-gold-500/10 border-gold-500/50 text-gold-400'
+                                                : 'bg-transparent border-transparent text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                                                 }`}
                                         >
                                             <div className="flex items-center justify-between">
@@ -328,8 +333,8 @@ const Hub = () => {
                                                                     <button
                                                                         onClick={(e) => togglePresentationStatus(selectedSubject.id, pres.id, e)}
                                                                         className={`relative w-14 h-7 rounded-full transition-all duration-300 ${pres.isPresented
-                                                                                ? 'bg-emerald-500'
-                                                                                : 'bg-red-500/50'
+                                                                            ? 'bg-emerald-500'
+                                                                            : 'bg-red-500/50'
                                                                             }`}
                                                                     >
                                                                         <motion.div
