@@ -335,7 +335,7 @@ OS details: Linux 2.6.9 - 2.6.33`}
 
             <div className="mt-8">
                 <h3 className="text-xl font-bold text-white mb-6 pl-2 border-l-4 border-blue-500">
-                    Top 5 Vulnerabilidades Críticas Detectadas
+                    Top 4 Vulnerabilidades Críticas Detectadas
                 </h3>
                 {vulnerabilities.map((v, i) => <VulnerabilityCard key={i} vuln={v} />)}
             </div>
