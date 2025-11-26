@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Book, ChevronRight, Monitor, Shield, Brain, Users, Globe, Briefcase, Terminal, ArrowRight, Sparkles, Play } from 'lucide-react';
+import { Book, ChevronRight, Monitor, Shield, Brain, Users, Globe, Briefcase, Terminal, ArrowRight, Sparkles, Play, Check, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 
-const subjects = [
+const initialSubjects = [
     {
         id: 'EAY4615',
         name: 'ÉTICA PROFESIONAL',
@@ -12,7 +12,7 @@ const subjects = [
         icon: Users,
         color: 'from-emerald-500 to-teal-500',
         image: '/Presentaciones/assets/cards/ethics.png',
-        progress: 30,
+        isPresented: false,
         presentations: []
     },
     {
@@ -22,7 +22,7 @@ const subjects = [
         icon: Briefcase,
         color: 'from-orange-500 to-amber-500',
         image: '/Presentaciones/assets/cards/management.png',
-        progress: 45,
+        isPresented: false,
         presentations: []
     },
     {
@@ -31,8 +31,8 @@ const subjects = [
         code: 'EMP2103',
         icon: Globe,
         color: 'from-pink-500 to-rose-500',
-        image: '/Presentaciones/assets/cards/management.png', // Reuse for now
-        progress: 20,
+        image: '/Presentaciones/assets/cards/management.png',
+        isPresented: false,
         presentations: []
     },
     {
@@ -41,8 +41,8 @@ const subjects = [
         code: 'ESP1513',
         icon: Book,
         color: 'from-blue-500 to-indigo-500',
-        image: '/Presentaciones/assets/cards/ethics.png', // Reuse for now
-        progress: 60,
+        image: '/Presentaciones/assets/cards/ethics.png',
+        isPresented: false,
         presentations: []
     },
     {
@@ -51,8 +51,8 @@ const subjects = [
         code: 'BIY6121',
         icon: Monitor,
         color: 'from-cyan-500 to-blue-500',
-        image: '/Presentaciones/assets/cards/ai.png', // Reuse for now
-        progress: 10,
+        image: '/Presentaciones/assets/cards/ai.png',
+        isPresented: false,
         presentations: []
     },
     {
@@ -62,7 +62,7 @@ const subjects = [
         icon: Brain,
         color: 'from-violet-500 to-purple-500',
         image: '/Presentaciones/assets/cards/ai.png',
-        progress: 15,
+        isPresented: false,
         presentations: []
     },
     {
@@ -72,7 +72,7 @@ const subjects = [
         icon: Shield,
         color: 'from-red-500 to-orange-500',
         image: '/Presentaciones/assets/cards/security.png',
-        progress: 100,
+        isPresented: true,
         presentations: [
             { id: 'ev4', name: 'Evaluación 4: Auditoría de Seguridad', path: '/2025-2/ASY6131/ev4', date: 'Nov 2025' }
         ]
@@ -82,7 +82,30 @@ const subjects = [
 const Hub = () => {
     const [selectedYear, setSelectedYear] = useState('2025-2');
     const [selectedSubject, setSelectedSubject] = useState(null);
+    const [subjects, setSubjects] = useState(initialSubjects);
     const navigate = useNavigate();
+
+    const togglePresented = (id, e) => {
+        e.stopPropagation();
+        setSubjects(prev => prev.map(sub =>
+            sub.id === id ? { ...sub, isPresented: !sub.isPresented } : sub
+        ));
+    };
+
+    const sortedSubjects = useMemo(() => {
+        return [...subjects].sort((a, b) => {
+            // 1. Unpresented first (!isPresented)
+            if (a.isPresented !== b.isPresented) {
+                return a.isPresented ? 1 : -1;
+            }
+            // 2. Most presentations first
+            if (a.presentations.length !== b.presentations.length) {
+                return b.presentations.length - a.presentations.length;
+            }
+            // 3. Alphabetical fallback
+            return a.name.localeCompare(b.name);
+        });
+    }, [subjects]);
 
     return (
         <Layout>
@@ -168,12 +191,12 @@ const Hub = () => {
                                     exit={{ opacity: 0, x: -20 }}
                                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                                 >
-                                    {subjects.map((subject, index) => (
+                                    {sortedSubjects.map((subject) => (
                                         <motion.div
+                                            layout
                                             key={subject.id}
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: index * 0.05 }}
                                             className="group relative overflow-hidden rounded-[20px] border border-white/10 h-[320px] hover:border-gold-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-gold-500/10"
                                         >
                                             {/* Background Image */}
@@ -210,15 +233,19 @@ const Hub = () => {
                                                             <ArrowRight size={16} />
                                                         </button>
 
-                                                        <div className="flex flex-col items-end gap-1">
-                                                            <span className="text-xs font-mono text-gold-400">{subject.progress}%</span>
-                                                            <div className="w-24 h-1 bg-slate-700 rounded-full overflow-hidden">
-                                                                <div
-                                                                    className="h-full bg-gold-500 rounded-full"
-                                                                    style={{ width: `${subject.progress}%` }}
-                                                                />
-                                                            </div>
-                                                        </div>
+                                                        {/* Presented Switch */}
+                                                        <button
+                                                            onClick={(e) => togglePresented(subject.id, e)}
+                                                            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 ${subject.isPresented
+                                                                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400'
+                                                                    : 'bg-red-500/10 border-red-500/50 text-red-400'
+                                                                }`}
+                                                        >
+                                                            <div className={`w-2 h-2 rounded-full ${subject.isPresented ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                                                            <span className="text-xs font-bold uppercase">
+                                                                {subject.isPresented ? 'Presentado' : 'Pendiente'}
+                                                            </span>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

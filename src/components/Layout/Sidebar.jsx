@@ -8,10 +8,10 @@ const Sidebar = () => {
 
     const menuItems = [
         { icon: Home, label: 'Inicio', path: '/' },
-        { icon: User, label: 'Perfil', path: '/profile' }, // Placeholder
-        { icon: Folder, label: 'Proyectos', path: '/projects' }, // Placeholder
-        { icon: FileText, label: 'Documentos', path: '/docs' }, // Placeholder
-        { icon: Settings, label: 'Ajustes', path: '/settings' }, // Placeholder
+        { icon: User, label: 'Perfil', path: '/profile' },
+        { icon: Folder, label: 'Proyectos', path: '/projects' },
+        { icon: FileText, label: 'Documentos', path: '/docs' },
+        { icon: Settings, label: 'Ajustes', path: '/settings' },
     ];
 
     return (
