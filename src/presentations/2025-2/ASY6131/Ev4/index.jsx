@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Shield, AlertTriangle, Terminal, Activity, Lock, Server, FileText, Database, CheckCircle, Search, Cpu, Bug, Eye, Menu, X, ArrowLeft } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../../../components/Layout/Layout';
 
 const SeguridadEv4 = () => {
     const [activeTab, setActiveTab] = useState('context');
@@ -88,85 +87,70 @@ COMPROMISED: 2048 37:e4:6a... root@metasploitable`,
     const NavButton = ({ active, label, icon: Icon, onClick }) => (
         <button
             onClick={onClick}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 w-full text-left font-medium ${active
-                    ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/50 shadow-lg shadow-indigo-500/10'
-                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent'
+            className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 w-full md:w-auto text-left ${active
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                 }`}
         >
             <Icon size={18} />
-            <span>{label}</span>
+            <span className="font-medium">{label}</span>
         </button>
     );
 
     const SectionHeader = ({ title, subtitle }) => (
-        <div className="mb-8 border-b border-white/5 pb-6">
-            <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">{title}</h2>
-            <p className="text-slate-400">{subtitle}</p>
+        <div className="mb-8 border-b border-gray-700 pb-4">
+            <h2 className="text-3xl font-bold text-white mb-2">{title}</h2>
+            <p className="text-gray-400">{subtitle}</p>
         </div>
     );
 
     const TerminalBlock = ({ title, content }) => (
-        <div className="bg-slate-950 rounded-xl overflow-hidden border border-white/10 font-mono text-sm my-4 shadow-2xl">
-            <div className="bg-slate-900 px-4 py-3 flex items-center gap-2 border-b border-white/5">
-                <div className="flex gap-1.5 mr-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
-                </div>
-                <Terminal size={14} className="text-slate-500 ml-2" />
-                <span className="text-slate-400 text-xs">{title}</span>
+        <div className="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 font-mono text-sm my-4 shadow-xl">
+            <div className="bg-gray-800 px-4 py-2 flex items-center gap-2 border-b border-gray-700">
+                <Terminal size={14} className="text-gray-400" />
+                <span className="text-gray-400 text-xs">{title}</span>
             </div>
-            <div className="p-4 text-emerald-400 whitespace-pre-wrap overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900 leading-relaxed">
+            <div className="p-4 text-green-400 whitespace-pre-wrap overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
                 {content}
             </div>
         </div>
     );
 
     const VulnerabilityCard = ({ vuln }) => (
-        <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-white/5 hover:border-red-500/30 transition-all duration-300 mb-6 group">
+        <div className="bg-gray-800 rounded-xl p-6 border-l-4 border-red-500 shadow-lg hover:shadow-red-500/10 transition-all mb-6">
             <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-4">
                 <div>
-                    <div className="flex items-center gap-3 mb-2">
-                        <span className={`px-2 py-1 text-xs font-bold rounded border ${vuln.severity === 'CRÍTICA'
-                                ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                                : 'bg-orange-500/10 text-orange-400 border-orange-500/20'
-                            }`}>
+                    <div className="flex items-center gap-2 mb-1">
+                        <span className="px-2 py-1 bg-red-900/50 text-red-400 text-xs font-bold rounded border border-red-800">
                             {vuln.severity}
                         </span>
-                        <span className="text-slate-500 text-sm font-mono">{vuln.id}</span>
+                        <span className="text-gray-400 text-sm font-mono">{vuln.id}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-red-400 transition-colors">{vuln.service}</h3>
-                    <p className="text-slate-400 text-sm mt-1">Port: <span className="font-mono text-slate-300">{vuln.port}</span></p>
+                    <h3 className="text-xl font-bold text-white">{vuln.service}</h3>
+                    <p className="text-gray-400 text-sm mt-1">Puerto: {vuln.port}</p>
                 </div>
                 <div className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                        <span className="text-3xl font-bold text-white">{vuln.cvss}</span>
-                        <div className="text-right">
-                            <span className="text-slate-500 text-[10px] uppercase font-bold block">CVSS Score</span>
-                            <span className="text-slate-400 text-xs">v3.1 Base</span>
-                        </div>
-                    </div>
+                    <span className="text-2xl font-bold text-red-500">{vuln.cvss}</span>
+                    <span className="text-gray-500 text-xs block">CVSS v3.1</span>
                 </div>
             </div>
 
-            <p className="text-slate-300 mb-6 leading-relaxed">{vuln.desc}</p>
+            <p className="text-gray-300 mb-4">{vuln.desc}</p>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <h4 className="text-xs font-bold text-slate-500 mb-3 uppercase tracking-wider flex items-center gap-2">
-                        <Terminal size={12} /> Technical Evidence
-                    </h4>
-                    <div className="bg-slate-950 rounded-lg p-4 text-xs font-mono text-emerald-500 border border-white/10 whitespace-pre-wrap shadow-inner">
+                    <h4 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wider">Evidencia Técnica</h4>
+                    <div className="bg-black rounded p-3 text-xs font-mono text-green-500 border border-gray-700 whitespace-pre-wrap">
                         {vuln.evidence}
                     </div>
                 </div>
-                <div className="flex flex-col">
-                    <h4 className="text-xs font-bold text-slate-500 mb-3 uppercase tracking-wider flex items-center gap-2">
-                        <Shield size={12} /> Mitigation Strategy
-                    </h4>
-                    <div className="bg-indigo-500/10 rounded-xl p-4 text-sm text-indigo-200 border border-indigo-500/20 flex items-start gap-3 h-full">
-                        <CheckCircle size={18} className="mt-0.5 flex-shrink-0 text-indigo-400" />
-                        {vuln.mitigation}
+                <div className="flex flex-col justify-between">
+                    <div>
+                        <h4 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wider">Plan de Mitigación</h4>
+                        <div className="bg-blue-900/20 rounded p-3 text-sm text-blue-200 border border-blue-800/50 flex items-start gap-2">
+                            <Shield size={16} className="mt-1 flex-shrink-0" />
+                            {vuln.mitigation}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,53 +160,53 @@ COMPROMISED: 2048 37:e4:6a... root@metasploitable`,
     // --- VIEWS ---
 
     const Dashboard = () => (
-        <div className="animate-fade-in space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-3xl border border-white/5 shadow-2xl col-span-2 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-
-                    <div className="flex items-center gap-5 mb-8 relative z-10">
-                        <div className="p-4 bg-indigo-500/20 rounded-2xl border border-indigo-500/20 shadow-lg shadow-indigo-500/10">
-                            <Server size={32} className="text-indigo-400" />
+        <div className="animate-fade-in">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl border border-gray-700 shadow-lg col-span-2">
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="p-3 bg-blue-600 rounded-lg">
+                            <Server size={24} className="text-white" />
                         </div>
                         <div>
-                            <h2 className="text-3xl font-bold text-white mb-1">Target: Metasploitable 2</h2>
-                            <p className="text-slate-400 text-lg">Project Management Server • TechSoluciones</p>
+                            <h2 className="text-2xl font-bold text-white">Objetivo: Metasploitable 2</h2>
+                            <p className="text-gray-400">Servidor de Gestión de Proyectos - TechSoluciones</p>
                         </div>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-4 relative z-10">
-                        {[
-                            { label: 'Operating System', val: 'Ubuntu 8.04', sub: 'Hardy Heron' },
-                            { label: 'IP Address', val: '192.168.1.100', sub: 'Static /24' },
-                            { label: 'Kernel Version', val: 'Linux 2.6.24', sub: 'Vulnerable' },
-                            { label: 'Status', val: 'CRITICAL', sub: 'End of Life', alert: true }
-                        ].map((item, i) => (
-                            <div key={i} className="bg-slate-950/50 p-4 rounded-xl border border-white/5 backdrop-blur-sm">
-                                <span className="text-slate-500 text-xs uppercase font-bold tracking-wider block mb-1">{item.label}</span>
-                                <span className={`font-mono text-lg font-semibold ${item.alert ? 'text-red-400 flex items-center gap-2' : 'text-slate-200'}`}>
-                                    {item.alert && <AlertTriangle size={16} />}
-                                    {item.val}
-                                </span>
-                                <span className="text-slate-600 text-xs block mt-1">{item.sub}</span>
-                            </div>
-                        ))}
+                    <div className="grid grid-cols-2 gap-4 mt-6">
+                        <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                            <span className="text-gray-500 text-xs uppercase block">Sistema Operativo</span>
+                            <span className="text-white font-mono">Ubuntu 8.04 (Hardy Heron)</span>
+                        </div>
+                        <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                            <span className="text-gray-500 text-xs uppercase block">Dirección IP</span>
+                            <span className="text-white font-mono">192.168.1.100</span>
+                        </div>
+                        <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                            <span className="text-gray-500 text-xs uppercase block">Kernel</span>
+                            <span className="text-white font-mono">Linux 2.6.24</span>
+                        </div>
+                        <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                            <span className="text-gray-500 text-xs uppercase block">Estado</span>
+                            <span className="text-red-400 font-bold flex items-center gap-2">
+                                <AlertTriangle size={14} /> Crítico / EOL
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                <div className="bg-slate-900/50 backdrop-blur-xl p-6 rounded-3xl border border-white/5 shadow-lg flex flex-col">
-                    <h3 className="text-sm font-bold text-slate-400 mb-6 uppercase tracking-wider text-center">Vulnerability Distribution</h3>
-                    <div className="flex-1 min-h-[200px]">
+                <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-lg flex flex-col justify-center items-center">
+                    <h3 className="text-lg font-semibold text-gray-300 mb-4">Resumen de Hallazgos</h3>
+                    <div className="w-full h-[200px]">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={vulnData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                                <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                <XAxis dataKey="name" stroke="#9ca3af" />
+                                <YAxis stroke="#9ca3af" />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#fff' }}
-                                    cursor={{ fill: 'rgba(255,255,255,0.03)' }}
+                                    contentStyle={{ backgroundColor: '#1f2937', border: 'none', color: '#fff' }}
+                                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                                 />
-                                <Bar dataKey="count" radius={[6, 6, 0, 0]} barSize={40}>
+                                <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                                     {vulnData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.color} />
                                     ))}
@@ -230,22 +214,18 @@ COMPROMISED: 2048 37:e4:6a... root@metasploitable`,
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
-                    <div className="mt-4 pt-4 border-t border-white/5 text-center">
-                        <span className="text-4xl font-bold text-white block">5</span>
-                        <span className="text-xs text-slate-500 uppercase tracking-wider">Critical / High Issues</span>
-                    </div>
+                    <p className="text-xs text-gray-500 mt-2">Total Vulnerabilidades Críticas/Altas: 5</p>
                 </div>
             </div>
 
-            <div className="bg-indigo-900/10 border border-indigo-500/20 p-8 rounded-3xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-32 bg-indigo-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-                <h3 className="text-indigo-400 font-bold mb-3 flex items-center gap-2 text-lg">
-                    <Activity size={24} /> Executive Context
+            <div className="bg-blue-900/20 border border-blue-800 p-6 rounded-xl">
+                <h3 className="text-blue-400 font-bold mb-2 flex items-center gap-2">
+                    <Activity size={20} /> Contexto del Proyecto
                 </h3>
-                <p className="text-indigo-100/80 leading-relaxed text-lg max-w-4xl">
-                    TechSoluciones has detected a significant increase in unauthorized access attempts targeting legacy infrastructure.
-                    This audit report details the findings of a comprehensive security assessment (Phases 1-4), identifying critical Remote Code Execution (RCE) vectors
-                    and proposing an immediate hardening strategy to mitigate risk exposure.
+                <p className="text-gray-300 leading-relaxed">
+                    TechSoluciones ha detectado un aumento en intentos de acceso no autorizado.
+                    Este informe detalla una auditoría de seguridad completa (Fase 1 a 4) para identificar vectores de ataque RCE,
+                    exposición de datos sensibles y propone un plan de hardening inmediato.
                 </p>
             </div>
         </div>
@@ -254,27 +234,51 @@ COMPROMISED: 2048 37:e4:6a... root@metasploitable`,
     const ThreatModel = () => (
         <div className="animate-fade-in">
             <SectionHeader
-                title="Phase 1: Threat Modeling"
-                subtitle="Asset decomposition and risk analysis using the Microsoft STRIDE methodology."
+                title="Fase 1: Modelado de Amenazas"
+                subtitle="Análisis bajo metodología STRIDE (Microsoft) para descomposición de activos."
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {strideData.map((item, idx) => (
-                    <div key={idx} className="bg-slate-900/50 p-6 rounded-2xl border border-white/5 hover:border-indigo-500/50 hover:bg-slate-800/50 transition-all duration-300 group">
+                    <div key={idx} className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-colors group">
                         <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">{item.cat}</h3>
-                            <span className="text-[10px] uppercase font-bold bg-slate-800 text-slate-400 px-2 py-1 rounded border border-white/5">
+                            <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">{item.cat}</h3>
+                            <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
                                 {item.asset}
                             </span>
                         </div>
-                        <p className="text-sm text-slate-400 mb-4 font-medium leading-relaxed">{item.desc}</p>
-                        <div className="pt-4 border-t border-white/5">
-                            <p className="text-xs text-slate-500 leading-relaxed">
-                                <span className="text-red-400 font-bold">Risk:</span> {item.risk}
-                            </p>
-                        </div>
+                        <p className="text-sm text-gray-400 mb-2 font-semibold">{item.desc}</p>
+                        <p className="text-sm text-gray-300 border-t border-gray-700 pt-3 mt-3">
+                            {item.risk}
+                        </p>
                     </div>
                 ))}
+            </div>
+
+            <div className="mt-8 bg-gray-900 p-6 rounded-xl border border-gray-800">
+                <h3 className="text-lg font-bold text-white mb-4">Mapa de Activos Críticos</h3>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                    <div className="p-4 bg-gray-800 rounded-lg">
+                        <Database className="mx-auto text-yellow-500 mb-2" />
+                        <div className="text-sm font-bold">MySQL Database</div>
+                        <div className="text-xs text-gray-500">Datos Clientes (PII)</div>
+                    </div>
+                    <div className="p-4 bg-gray-800 rounded-lg">
+                        <Server className="mx-auto text-red-500 mb-2" />
+                        <div className="text-sm font-bold">Apache Web</div>
+                        <div className="text-xs text-gray-500">Interfaz Pública</div>
+                    </div>
+                    <div className="p-4 bg-gray-800 rounded-lg">
+                        <Lock className="mx-auto text-blue-500 mb-2" />
+                        <div className="text-sm font-bold">SSH / FTP</div>
+                        <div className="text-xs text-gray-500">Gestión Remota</div>
+                    </div>
+                    <div className="p-4 bg-gray-800 rounded-lg">
+                        <Cpu className="mx-auto text-purple-500 mb-2" />
+                        <div className="text-sm font-bold">Kernel Linux</div>
+                        <div className="text-xs text-gray-500">Núcleo Sistema</div>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -282,8 +286,8 @@ COMPROMISED: 2048 37:e4:6a... root@metasploitable`,
     const VulnerabilityAnalysis = () => (
         <div className="animate-fade-in">
             <SectionHeader
-                title="Phase 2: Vulnerability Analysis"
-                subtitle="Automated scanning results (Nmap/Nikto) and manual verification via Metasploit Framework."
+                title="Fase 2: Análisis de Vulnerabilidades"
+                subtitle="Resultados del escaneo con Nmap, Nikto y validación manual con Metasploit."
             />
 
             <TerminalBlock
@@ -305,10 +309,9 @@ PORT     STATE SERVICE     VERSION
 OS details: Linux 2.6.9 - 2.6.33`}
             />
 
-            <div className="mt-12">
-                <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-                    <div className="w-2 h-8 bg-red-500 rounded-full" />
-                    Top 5 Critical Vulnerabilities
+            <div className="mt-8">
+                <h3 className="text-xl font-bold text-white mb-6 pl-2 border-l-4 border-blue-500">
+                    Top 5 Vulnerabilidades Críticas Detectadas
                 </h3>
                 {vulnerabilities.map((v, i) => <VulnerabilityCard key={i} vuln={v} />)}
             </div>
@@ -318,79 +321,85 @@ OS details: Linux 2.6.9 - 2.6.33`}
     const IncidentResponse = () => (
         <div className="animate-fade-in">
             <SectionHeader
-                title="Phase 3: Incident Response"
-                subtitle="Operational playbook based on NIST SP 800-61 r2 for system compromise scenarios."
+                title="Fase 3: Manejo de Incidentes"
+                subtitle="Playbook operativo basado en NIST SP 800-61 r2 para compromiso de sistema."
             />
 
-            <div className="space-y-8 relative pl-8 md:pl-0">
-                {/* Vertical Line */}
-                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-700 to-transparent -translate-x-1/2 hidden md:block" />
+            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
 
                 {/* Step 1 */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div className="absolute left-[-2rem] md:left-1/2 w-10 h-10 rounded-full bg-slate-900 border-4 border-slate-800 text-emerald-500 shadow-xl flex items-center justify-center z-10 md:-translate-x-1/2">
-                        <Search size={18} />
+                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-emerald-500 text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                        <Search size={20} />
                     </div>
-                    <div className="w-full md:w-[calc(50%-3rem)] bg-slate-900/50 p-6 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition-all">
-                        <div className="flex items-center justify-between mb-3">
-                            <h4 className="font-bold text-emerald-400">1. Identification & Detection</h4>
-                            <span className="font-mono text-xs bg-slate-950 px-2 py-1 rounded text-slate-500">T0</span>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-800 p-4 rounded border border-gray-700 shadow">
+                        <div className="flex items-center justify-between space-x-2 mb-1">
+                            <div className="font-bold text-slate-200">1. Identificación y Detección</div>
+                            <time className="font-mono text-xs text-slate-500">T0</time>
                         </div>
-                        <ul className="list-disc pl-4 space-y-2 text-sm text-slate-400">
-                            <li>Monitor traffic on port 6200 (vsftpd backdoor) or 6667.</li>
-                            <li>Command: <code className="bg-slate-950 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">netstat -antp</code> to view active connections.</li>
-                            <li>Review logs: <code className="bg-slate-950 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">/var/log/auth.log</code>.</li>
-                        </ul>
+                        <div className="text-slate-400 text-sm">
+                            <ul className="list-disc pl-4 space-y-1">
+                                <li>Detectar tráfico en puerto 6200 (Backdoor vsftpd) o 6667.</li>
+                                <li>Comando: <code className="bg-gray-900 px-1 rounded text-green-400">netstat -antp</code> para ver conexiones activas.</li>
+                                <li>Revisar logs: <code className="bg-gray-900 px-1 rounded text-green-400">/var/log/auth.log</code> y <code className="bg-gray-900 px-1 rounded text-green-400">vsftpd.log</code>.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 {/* Step 2 */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div className="absolute left-[-2rem] md:left-1/2 w-10 h-10 rounded-full bg-slate-900 border-4 border-slate-800 text-blue-500 shadow-xl flex items-center justify-center z-10 md:-translate-x-1/2">
-                        <Lock size={18} />
+                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-blue-500 text-slate-500 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                        <Lock size={20} />
                     </div>
-                    <div className="w-full md:w-[calc(50%-3rem)] bg-slate-900/50 p-6 rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all">
-                        <div className="flex items-center justify-between mb-3">
-                            <h4 className="font-bold text-blue-400">2. Containment</h4>
-                            <span className="font-mono text-xs bg-slate-950 px-2 py-1 rounded text-slate-500">T+10m</span>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-800 p-4 rounded border border-gray-700 shadow">
+                        <div className="flex items-center justify-between space-x-2 mb-1">
+                            <div className="font-bold text-slate-200">2. Contención</div>
+                            <time className="font-mono text-xs text-slate-500">T+10m</time>
                         </div>
-                        <p className="text-sm text-slate-400 mb-3">Immediate logical isolation without powering down (preserve RAM).</p>
-                        <div className="bg-slate-950 p-3 rounded-lg border border-white/5 font-mono text-xs text-blue-300">
-                            iptables -I INPUT -s! &lt;ADMIN_IP&gt; -j DROP
+                        <div className="text-slate-400 text-sm">
+                            <p className="mb-2">Aislamiento lógico inmediato sin apagar (preservar RAM).</p>
+                            <TerminalBlock title="Bloqueo de emergencia con iptables" content={`iptables -I INPUT -s! <IP_ADMIN> -j DROP
+iptables -I OUTPUT -d! <IP_ADMIN> -j DROP
+/etc/init.d/vsftpd stop
+killall -9 vsftpd`} />
                         </div>
                     </div>
                 </div>
 
                 {/* Step 3 */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div className="absolute left-[-2rem] md:left-1/2 w-10 h-10 rounded-full bg-slate-900 border-4 border-slate-800 text-red-500 shadow-xl flex items-center justify-center z-10 md:-translate-x-1/2">
-                        <Bug size={18} />
+                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-red-500 text-slate-500 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                        <Bug size={20} />
                     </div>
-                    <div className="w-full md:w-[calc(50%-3rem)] bg-slate-900/50 p-6 rounded-2xl border border-white/5 hover:border-red-500/30 transition-all">
-                        <div className="flex items-center justify-between mb-3">
-                            <h4 className="font-bold text-red-400">3. Eradication</h4>
-                            <span className="font-mono text-xs bg-slate-950 px-2 py-1 rounded text-slate-500">T+30m</span>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-800 p-4 rounded border border-gray-700 shadow">
+                        <div className="flex items-center justify-between space-x-2 mb-1">
+                            <div className="font-bold text-slate-200">3. Erradicación</div>
+                            <time className="font-mono text-xs text-slate-500">T+30m</time>
                         </div>
-                        <ul className="list-disc pl-4 space-y-2 text-sm text-slate-400">
-                            <li>Remove infected binary: <code className="bg-slate-950 px-1.5 py-0.5 rounded text-red-400 font-mono text-xs">apt-get remove --purge vsftpd</code>.</li>
-                            <li>Audit <code className="bg-slate-950 px-1.5 py-0.5 rounded text-red-400 font-mono text-xs">/etc/passwd</code> for unauthorized users.</li>
-                        </ul>
+                        <div className="text-slate-400 text-sm">
+                            <ul className="list-disc pl-4 space-y-1">
+                                <li>Eliminar binario infectado: <code className="bg-gray-900 px-1 rounded">apt-get remove --purge vsftpd</code>.</li>
+                                <li>Eliminar usuarios no autorizados en <code className="bg-gray-900 px-1 rounded">/etc/passwd</code>.</li>
+                                <li>Borrar claves SSH extrañas en <code className="bg-gray-900 px-1 rounded">/root/.ssh/authorized_keys</code>.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 {/* Step 4 */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div className="absolute left-[-2rem] md:left-1/2 w-10 h-10 rounded-full bg-slate-900 border-4 border-slate-800 text-purple-500 shadow-xl flex items-center justify-center z-10 md:-translate-x-1/2">
-                        <CheckCircle size={18} />
+                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-purple-500 text-slate-500 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                        <CheckCircle size={20} />
                     </div>
-                    <div className="w-full md:w-[calc(50%-3rem)] bg-slate-900/50 p-6 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-all">
-                        <div className="flex items-center justify-between mb-3">
-                            <h4 className="font-bold text-purple-400">4. Recovery & Lessons</h4>
-                            <span className="font-mono text-xs bg-slate-950 px-2 py-1 rounded text-slate-500">T+2h</span>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-gray-800 p-4 rounded border border-gray-700 shadow">
+                        <div className="flex items-center justify-between space-x-2 mb-1">
+                            <div className="font-bold text-slate-200">4. Recuperación y Lecciones</div>
+                            <time className="font-mono text-xs text-slate-500">T+2h</time>
                         </div>
-                        <p className="text-sm text-slate-400">Restore services using SFTP. Restore DB from offline backups. Implement strict monitoring for 48hrs.</p>
-                        <div className="mt-3 p-2 bg-yellow-500/10 border border-yellow-500/20 rounded text-xs text-yellow-200 font-medium text-center">
-                            Lesson Learned: Urgent migration of EOL OS required.
+                        <div className="text-slate-400 text-sm">
+                            <p>Restaurar servicios usando SFTP en lugar de FTP. Restaurar base de datos desde backup offline. Implementar monitorización estricta por 48hrs.</p>
+                            <p className="mt-2 text-yellow-500 font-semibold">Lección: Migración urgente de S.O. EOL.</p>
                         </div>
                     </div>
                 </div>
@@ -402,67 +411,64 @@ OS details: Linux 2.6.9 - 2.6.33`}
     const Hardening = () => (
         <div className="animate-fade-in">
             <SectionHeader
-                title="Phase 4: Hardening Plan"
-                subtitle="Compensating controls to ensure Confidentiality, Integrity, and Availability (CIA)."
+                title="Fase 4: Plan de Hardening"
+                subtitle="Controles compensatorios para confidencialidad, integridad y disponibilidad."
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* SSH Hardening */}
-                <div className="bg-slate-900/50 rounded-3xl p-8 border border-white/5 hover:border-blue-500/30 transition-all">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                        <div className="p-2 bg-blue-500/20 rounded-lg text-blue-400"><Lock size={20} /></div>
-                        SSH Hardening (Port 22)
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <Lock size={20} className="text-blue-400" /> Hardening SSH (Puerto 22)
                     </h3>
-                    <p className="text-slate-400 text-sm mb-6">Prevent brute force attacks and usage of compromised keys.</p>
-                    <TerminalBlock title="/etc/ssh/sshd_config" content={`# Disable root login
+                    <p className="text-gray-400 text-sm mb-4">Evita fuerza bruta y uso de claves comprometidas.</p>
+                    <TerminalBlock title="/etc/ssh/sshd_config" content={`# Deshabilitar root directo
 PermitRootLogin no
 
-# Disable password auth (Keys only)
+# Deshabilitar contraseñas (Solo llaves)
 PasswordAuthentication no
 
-# Regenerate keys (CVE-2008-0166 fix)
+# Regenerar llaves (CVE-2008-0166 fix)
 rm /etc/ssh/ssh_host_*
 dpkg-reconfigure openssh-server`} />
                 </div>
 
                 {/* MySQL Hardening */}
-                <div className="bg-slate-900/50 rounded-3xl p-8 border border-white/5 hover:border-yellow-500/30 transition-all">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                        <div className="p-2 bg-yellow-500/20 rounded-lg text-yellow-400"><Database size={20} /></div>
-                        MySQL Hardening (Port 3306)
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <Database size={20} className="text-yellow-400" /> Hardening MySQL (Puerto 3306)
                     </h3>
-                    <p className="text-slate-400 text-sm mb-6">Isolate the database from the public network.</p>
-                    <TerminalBlock title="/etc/mysql/my.cnf" content={`# Listen only on localhost
+                    <p className="text-gray-400 text-sm mb-4">Aislar la base de datos de la red pública.</p>
+                    <TerminalBlock title="/etc/mysql/my.cnf" content={`# Escuchar solo en localhost
 bind-address = 127.0.0.1
 
-# Disable local file read
+# Deshabilitar lectura de archivos locales
 local-infile=0
 
-# Run security script
+# Ejecutar script de seguridad
 mysql_secure_installation`} />
                 </div>
 
                 {/* Service Reduction */}
-                <div className="bg-slate-900/50 rounded-3xl p-8 border border-white/5 hover:border-red-500/30 transition-all lg:col-span-2">
-                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                        <div className="p-2 bg-red-500/20 rounded-lg text-red-400"><Server size={20} /></div>
-                        Attack Surface Reduction
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 lg:col-span-2">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <Server size={20} className="text-red-400" /> Reducción de Superficie de Ataque
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="bg-red-500/5 p-6 rounded-2xl border border-red-500/10 hover:bg-red-500/10 transition-colors">
-                            <h4 className="font-bold text-red-200 mb-1">Telnet (23)</h4>
-                            <p className="text-xs text-red-300/70 mb-3">Plaintext protocol. Insecure.</p>
-                            <code className="bg-slate-950 px-2 py-1 rounded text-red-400 text-xs font-mono block text-center">apt-get remove telnetd</code>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-red-900/20 p-4 rounded border border-red-900/50">
+                            <h4 className="font-bold text-red-200">Telnet (23)</h4>
+                            <p className="text-xs text-red-300 mb-2">Texto plano. Inseguro.</p>
+                            <code className="bg-black/50 px-2 py-1 rounded text-red-400 text-xs">apt-get remove telnetd</code>
                         </div>
-                        <div className="bg-red-500/5 p-6 rounded-2xl border border-red-500/10 hover:bg-red-500/10 transition-colors">
-                            <h4 className="font-bold text-red-200 mb-1">FTP (21)</h4>
-                            <p className="text-xs text-red-300/70 mb-3">Active backdoor. Use SFTP.</p>
-                            <code className="bg-slate-950 px-2 py-1 rounded text-red-400 text-xs font-mono block text-center">apt-get remove vsftpd</code>
+                        <div className="bg-red-900/20 p-4 rounded border border-red-900/50">
+                            <h4 className="font-bold text-red-200">FTP (21)</h4>
+                            <p className="text-xs text-red-300 mb-2">Backdoor activo. Usar SFTP.</p>
+                            <code className="bg-black/50 px-2 py-1 rounded text-red-400 text-xs">apt-get remove vsftpd</code>
                         </div>
-                        <div className="bg-red-500/5 p-6 rounded-2xl border border-red-500/10 hover:bg-red-500/10 transition-colors">
-                            <h4 className="font-bold text-red-200 mb-1">distcc (3632)</h4>
-                            <p className="text-xs text-red-300/70 mb-3">Unauthenticated RCE.</p>
-                            <code className="bg-slate-950 px-2 py-1 rounded text-red-400 text-xs font-mono block text-center">update-rc.d -f distcc remove</code>
+                        <div className="bg-red-900/20 p-4 rounded border border-red-900/50">
+                            <h4 className="font-bold text-red-200">distcc (3632)</h4>
+                            <p className="text-xs text-red-300 mb-2">RCE sin autenticación.</p>
+                            <code className="bg-black/50 px-2 py-1 rounded text-red-400 text-xs">update-rc.d -f distcc remove</code>
                         </div>
                     </div>
                 </div>
@@ -484,63 +490,73 @@ mysql_secure_installation`} />
     };
 
     return (
-        <Layout>
-            <div className="flex flex-col md:flex-row min-h-[calc(100vh-64px)]">
-                {/* Mobile Header */}
-                <div className="md:hidden bg-slate-900/50 backdrop-blur-md p-4 flex justify-between items-center border-b border-white/5 sticky top-16 z-40">
-                    <div className="flex items-center gap-2 text-indigo-400 font-bold text-lg">
-                        <Shield className="fill-current" size={20} /> Security Audit
-                    </div>
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white p-2 hover:bg-white/5 rounded-lg">
-                        {isMenuOpen ? <X /> : <Menu />}
-                    </button>
+        <div className="min-h-screen bg-[#0f172a] text-slate-200 flex flex-col md:flex-row font-sans">
+            {/* Styles for scrollbar injection */}
+            <style>{`
+                ::-webkit-scrollbar { width: 8px; }
+                ::-webkit-scrollbar-track { background: #1e293b; }
+                ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+                ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+                .animate-fade-in { animation: fadeIn 0.3s ease-in; }
+                @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+            `}</style>
+
+            {/* Mobile Header */}
+            <div className="md:hidden bg-gray-900 p-4 flex justify-between items-center border-b border-gray-800 sticky top-0 z-50">
+                <div className="flex items-center gap-2 text-blue-500 font-bold text-xl">
+                    <Shield className="fill-current" /> TechSoluciones
+                </div>
+                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
+                    {isMenuOpen ? <X /> : <Menu />}
+                </button>
+            </div>
+
+            {/* Sidebar / Navigation */}
+            <nav className={`fixed inset-0 z-40 bg-gray-900/95 backdrop-blur-md md:static md:bg-gray-900 md:w-72 md:flex-shrink-0 border-r border-gray-800 p-6 flex flex-col transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+                <div className="hidden md:flex items-center gap-2 text-blue-500 font-bold text-2xl mb-10">
+                    <Shield className="fill-current" size={32} /> TechSec
                 </div>
 
-                {/* Sidebar / Navigation */}
-                <nav className={`fixed inset-0 top-16 z-30 bg-slate-950/95 backdrop-blur-xl md:static md:bg-transparent md:w-80 md:flex-shrink-0 border-r border-white/5 p-6 flex flex-col transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
-                    <div className="mb-8">
-                        <button
-                            onClick={() => navigate('/')}
-                            className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium mb-6 group"
-                        >
-                            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                            Back to Hub
-                        </button>
-                        <h1 className="text-2xl font-bold text-white leading-tight">
-                            Security Audit <br />
-                            <span className="text-indigo-400">Report</span>
-                        </h1>
-                        <p className="text-slate-500 text-sm mt-2">ASY6131 • Evaluation 4</p>
-                    </div>
+                <button
+                    onClick={() => navigate('/')}
+                    className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium mb-6 md:mb-10 group"
+                >
+                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                    Volver al Hub
+                </button>
 
-                    <div className="space-y-2 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 px-2">Navigation</p>
-                        <NavButton active={activeTab === 'context'} label="Context & Assets" icon={Activity} onClick={() => { setActiveTab('context'); setIsMenuOpen(false); }} />
-                        <NavButton active={activeTab === 'threats'} label="Phase 1: Threats" icon={Eye} onClick={() => { setActiveTab('threats'); setIsMenuOpen(false); }} />
-                        <NavButton active={activeTab === 'vulns'} label="Phase 2: Pentesting" icon={Bug} onClick={() => { setActiveTab('vulns'); setIsMenuOpen(false); }} />
-                        <NavButton active={activeTab === 'incident'} label="Phase 3: Incidents" icon={AlertTriangle} onClick={() => { setActiveTab('incident'); setIsMenuOpen(false); }} />
-                        <NavButton active={activeTab === 'hardening'} label="Phase 4: Hardening" icon={Lock} onClick={() => { setActiveTab('hardening'); setIsMenuOpen(false); }} />
-                    </div>
+                <div className="space-y-2 flex-1">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 px-4">Menu Principal</p>
+                    <NavButton active={activeTab === 'context'} label="Contexto y Activos" icon={Activity} onClick={() => { setActiveTab('context'); setIsMenuOpen(false); }} />
+                    <NavButton active={activeTab === 'threats'} label="Fase 1: Amenazas" icon={Eye} onClick={() => { setActiveTab('threats'); setIsMenuOpen(false); }} />
+                    <NavButton active={activeTab === 'vulns'} label="Fase 2: Pentesting" icon={Bug} onClick={() => { setActiveTab('vulns'); setIsMenuOpen(false); }} />
+                    <NavButton active={activeTab === 'incident'} label="Fase 3: Incidentes" icon={AlertTriangle} onClick={() => { setActiveTab('incident'); setIsMenuOpen(false); }} />
+                    <NavButton active={activeTab === 'hardening'} label="Fase 4: Hardening" icon={Lock} onClick={() => { setActiveTab('hardening'); setIsMenuOpen(false); }} />
+                </div>
 
-                    <div className="mt-6 pt-6 border-t border-white/5">
-                        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg">
-                                TS
-                            </div>
-                            <div>
-                                <p className="text-sm font-bold text-white">TechSoluciones</p>
-                                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Confidential</p>
-                            </div>
+                <div className="mt-auto pt-6 border-t border-gray-800">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center font-bold text-white">
+                            TS
+                        </div>
+                        <div>
+                            <p className="text-sm font-bold text-white">Juan Diaz</p>
+                            <p className="text-xs text-gray-500">Asignatura: ASY6131</p>
                         </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
 
-                {/* Main Content */}
-                <main className="flex-1 p-6 md:p-12 overflow-y-auto w-full max-w-7xl mx-auto">
-                    {renderContent()}
-                </main>
-            </div>
-        </Layout>
+            {/* Main Content */}
+            <main className="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto w-full max-w-7xl mx-auto">
+                {renderContent()}
+
+                <footer className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                    <p>© 2025 TechSoluciones - Informe de Auditoría de Seguridad. Confidencial.</p>
+                    <p className="mt-1">Basado en estándares PTES y NIST.</p>
+                </footer>
+            </main>
+        </div>
     );
 };
 
