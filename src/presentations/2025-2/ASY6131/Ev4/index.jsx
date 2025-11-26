@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, AlertTriangle, Terminal, Activity, Lock, Server, FileText, Database, CheckCircle, Search, Cpu, Bug, Eye, Menu, X, ArrowLeft } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,30 @@ const SeguridadEv4 = () => {
     const [activeTab, setActiveTab] = useState('context');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
+
+    // Load chatbot
+    useEffect(() => {
+        // Load the chatbot plugin script
+        const script1 = document.createElement('script');
+        script1.src = 'https://app.chatgptbuilder.io/webchat/plugin.js?v=6';
+        script1.async = true;
+        document.body.appendChild(script1);
+
+        // Setup chatbot after plugin loads
+        script1.onload = () => {
+            const script2 = document.createElement('script');
+            script2.innerHTML = `ktt10.setup({id:"KlCn2QUhdL4lUs98d3y",accountId:"1878178",color:"#0954CD"})`;
+            document.body.appendChild(script2);
+        };
+
+        // Cleanup on unmount
+        return () => {
+            document.body.removeChild(script1);
+            // Remove chatbot widget if exists
+            const chatWidget = document.querySelector('[id^="ktt10"]');
+            if (chatWidget) chatWidget.remove();
+        };
+    }, []);
 
     // --- DATA ---
     const vulnData = [
