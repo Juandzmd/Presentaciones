@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Book, ChevronRight, Monitor, Shield, Brain, Users, Globe, Briefcase, Terminal, ArrowRight, Sparkles, Play, Check, X } from 'lucide-react';
+import { Book, ChevronRight, Monitor, Shield, Brain, Users, Globe, Briefcase, Terminal, ArrowRight, Sparkles, Play, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 
@@ -12,7 +12,6 @@ const initialSubjects = [
         icon: Users,
         color: 'from-emerald-500 to-teal-500',
         image: '/Presentaciones/assets/cards/ethics.png',
-        isPresented: false,
         presentations: []
     },
     {
@@ -22,7 +21,6 @@ const initialSubjects = [
         icon: Briefcase,
         color: 'from-orange-500 to-amber-500',
         image: '/Presentaciones/assets/cards/management.png',
-        isPresented: false,
         presentations: []
     },
     {
@@ -32,7 +30,6 @@ const initialSubjects = [
         icon: Globe,
         color: 'from-pink-500 to-rose-500',
         image: '/Presentaciones/assets/cards/management.png',
-        isPresented: false,
         presentations: []
     },
     {
@@ -42,7 +39,6 @@ const initialSubjects = [
         icon: Book,
         color: 'from-blue-500 to-indigo-500',
         image: '/Presentaciones/assets/cards/ethics.png',
-        isPresented: false,
         presentations: []
     },
     {
@@ -52,7 +48,6 @@ const initialSubjects = [
         icon: Monitor,
         color: 'from-cyan-500 to-blue-500',
         image: '/Presentaciones/assets/cards/ai.png',
-        isPresented: false,
         presentations: []
     },
     {
@@ -62,7 +57,6 @@ const initialSubjects = [
         icon: Brain,
         color: 'from-violet-500 to-purple-500',
         image: '/Presentaciones/assets/cards/ai.png',
-        isPresented: false,
         presentations: []
     },
     {
@@ -72,9 +66,8 @@ const initialSubjects = [
         icon: Shield,
         color: 'from-red-500 to-orange-500',
         image: '/Presentaciones/assets/cards/security.png',
-        isPresented: true,
         presentations: [
-            { id: 'ev4', name: 'Evaluación 4: Auditoría de Seguridad', path: '/2025-2/ASY6131/ev4', date: 'Nov 2025' }
+            { id: 'ev4', name: 'Evaluación 4: Auditoría de Seguridad', path: '/2025-2/ASY6131/ev4', date: 'Nov 2025', isPresented: true }
         ]
     }
 ];
@@ -85,24 +78,41 @@ const Hub = () => {
     const [subjects, setSubjects] = useState(initialSubjects);
     const navigate = useNavigate();
 
-    const togglePresented = (id, e) => {
+    const togglePresentationStatus = (subjectId, presentationId, e) => {
         e.stopPropagation();
-        setSubjects(prev => prev.map(sub =>
-            sub.id === id ? { ...sub, isPresented: !sub.isPresented } : sub
-        ));
+        setSubjects(prev => prev.map(sub => {
+            if (sub.id === subjectId) {
+                return {
+                    ...sub,
+                    presentations: sub.presentations.map(pres =>
+                        pres.id === presentationId
+                            ? { ...pres, isPresented: !pres.isPresented }
+                            : pres
+                    )
+                };
+            }
+            return sub;
+        }));
+    };
+
+    const getSubjectPendingCount = (subject) => {
+        return subject.presentations.filter(p => !p.isPresented).length;
     };
 
     const sortedSubjects = useMemo(() => {
         return [...subjects].sort((a, b) => {
-            // 1. Unpresented first (!isPresented)
-            if (a.isPresented !== b.isPresented) {
-                return a.isPresented ? 1 : -1;
+            const aPending = getSubjectPendingCount(a);
+            const bPending = getSubjectPendingCount(b);
+
+            // 1. Most pending presentations first
+            if (aPending !== bPending) {
+                return bPending - aPending;
             }
-            // 2. Most presentations first
+            // 2. Most presentations total
             if (a.presentations.length !== b.presentations.length) {
                 return b.presentations.length - a.presentations.length;
             }
-            // 3. Alphabetical fallback
+            // 3. Alphabetical
             return a.name.localeCompare(b.name);
         });
     }, [subjects]);
@@ -191,66 +201,67 @@ const Hub = () => {
                                     exit={{ opacity: 0, x: -20 }}
                                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                                 >
-                                    {sortedSubjects.map((subject) => (
-                                        <motion.div
-                                            layout
-                                            key={subject.id}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            className="group relative overflow-hidden rounded-[20px] border border-white/10 h-[320px] hover:border-gold-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-gold-500/10"
-                                        >
-                                            {/* Background Image */}
-                                            <div
-                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                                style={{ backgroundImage: `url(${subject.image})` }}
-                                            />
-
-                                            {/* Overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-950/95" />
-
-                                            {/* Content */}
-                                            <div className="relative z-10 p-6 h-full flex flex-col">
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <div className={`p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg`}>
-                                                        <subject.icon size={24} className="text-white" />
+                                    {sortedSubjects.map((subject) => {
+                                        const pendingCount = getSubjectPendingCount(subject);
+                                        return (
+                                            <motion.div
+                                                layout
+                                                key={subject.id}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="group relative overflow-hidden rounded-[20px] border border-white/10 h-[320px] hover:border-gold-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-gold-500/10"
+                                            >
+                                                {/* Pending indicator badge */}
+                                                {pendingCount > 0 && (
+                                                    <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/90 backdrop-blur-sm border border-red-400/50 shadow-lg">
+                                                        <AlertCircle size={12} className="text-white" />
+                                                        <span className="text-xs font-bold text-white">{pendingCount} Pendiente{pendingCount > 1 ? 's' : ''}</span>
                                                     </div>
-                                                    <span className="font-mono text-xs text-white/80 bg-black/40 px-2 py-1 rounded border border-white/10 backdrop-blur-sm">
-                                                        {subject.code}
-                                                    </span>
-                                                </div>
+                                                )}
 
-                                                <div className="mt-auto">
-                                                    <h3 className="text-2xl font-bold text-white mb-2 font-serif tracking-wide">
-                                                        {subject.name}
-                                                    </h3>
+                                                {/* Background Image */}
+                                                <div
+                                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                                    style={{ backgroundImage: `url(${subject.image})` }}
+                                                />
 
-                                                    <div className="flex items-center justify-between mt-6 pt-6 border-t border-white/10">
-                                                        <button
-                                                            onClick={() => setSelectedSubject(subject)}
-                                                            className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-slate-950 font-bold text-sm rounded-lg hover:bg-gold-400 transition-colors"
-                                                        >
-                                                            Ver Proyecto
-                                                            <ArrowRight size={16} />
-                                                        </button>
+                                                {/* Overlay */}
+                                                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-950/95" />
 
-                                                        {/* Presented Switch */}
-                                                        <button
-                                                            onClick={(e) => togglePresented(subject.id, e)}
-                                                            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 ${subject.isPresented
-                                                                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400'
-                                                                    : 'bg-red-500/10 border-red-500/50 text-red-400'
-                                                                }`}
-                                                        >
-                                                            <div className={`w-2 h-2 rounded-full ${subject.isPresented ? 'bg-emerald-500' : 'bg-red-500'}`} />
-                                                            <span className="text-xs font-bold uppercase">
-                                                                {subject.isPresented ? 'Presentado' : 'Pendiente'}
-                                                            </span>
-                                                        </button>
+                                                {/* Content */}
+                                                <div className="relative z-10 p-6 h-full flex flex-col">
+                                                    <div className="flex justify-between items-start mb-4">
+                                                        <div className={`p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg`}>
+                                                            <subject.icon size={24} className="text-white" />
+                                                        </div>
+                                                        <span className="font-mono text-xs text-white/80 bg-black/40 px-2 py-1 rounded border border-white/10 backdrop-blur-sm">
+                                                            {subject.code}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="mt-auto">
+                                                        <h3 className="text-2xl font-bold text-white mb-2 font-serif tracking-wide">
+                                                            {subject.name}
+                                                        </h3>
+
+                                                        <div className="flex items-center justify-between mt-6 pt-6 border-t border-white/10">
+                                                            <button
+                                                                onClick={() => setSelectedSubject(subject)}
+                                                                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-slate-950 font-bold text-sm rounded-lg hover:bg-gold-400 transition-colors"
+                                                            >
+                                                                Ver Proyecto
+                                                                <ArrowRight size={16} />
+                                                            </button>
+
+                                                            <div className="text-right">
+                                                                <span className="text-xs text-slate-400">{subject.presentations.length} Presentación{subject.presentations.length !== 1 ? 'es' : ''}</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </motion.div>
-                                    ))}
+                                            </motion.div>
+                                        );
+                                    })}
                                 </motion.div>
                             ) : (
                                 <motion.div
@@ -297,23 +308,47 @@ const Hub = () => {
                                                         selectedSubject.presentations.map((pres) => (
                                                             <div
                                                                 key={pres.id}
-                                                                onClick={() => navigate(pres.path)}
-                                                                className="group flex items-center justify-between p-5 rounded-2xl bg-slate-800/30 border border-white/5 hover:border-gold-500/50 hover:bg-slate-800/50 cursor-pointer transition-all duration-300"
+                                                                className="group flex items-center justify-between p-5 rounded-2xl bg-slate-800/30 border border-white/5 hover:border-gold-500/50 transition-all duration-300"
                                                             >
-                                                                <div className="flex items-center gap-5">
-                                                                    <div className="p-3 bg-slate-900 rounded-xl text-gold-400 group-hover:text-slate-900 group-hover:bg-gold-500 transition-colors">
+                                                                <div className="flex items-center gap-5 flex-1">
+                                                                    <div
+                                                                        onClick={() => navigate(pres.path)}
+                                                                        className="cursor-pointer p-3 bg-slate-900 rounded-xl text-gold-400 group-hover:text-slate-900 group-hover:bg-gold-500 transition-colors"
+                                                                    >
                                                                         <Play size={20} fill="currentColor" />
                                                                     </div>
-                                                                    <div>
+                                                                    <div className="flex-1" onClick={() => navigate(pres.path)} style={{ cursor: 'pointer' }}>
                                                                         <h4 className="font-bold text-slate-200 group-hover:text-white text-lg transition-colors">{pres.name}</h4>
                                                                         <p className="text-sm text-slate-500 mt-1">{pres.date}</p>
                                                                     </div>
                                                                 </div>
+
+                                                                {/* Interactive Switch */}
                                                                 <div className="flex items-center gap-4">
-                                                                    <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">
-                                                                        COMPLETADO
+                                                                    <button
+                                                                        onClick={(e) => togglePresentationStatus(selectedSubject.id, pres.id, e)}
+                                                                        className={`relative w-14 h-7 rounded-full transition-all duration-300 ${pres.isPresented
+                                                                                ? 'bg-emerald-500'
+                                                                                : 'bg-red-500/50'
+                                                                            }`}
+                                                                    >
+                                                                        <motion.div
+                                                                            className="absolute top-1 w-5 h-5 bg-white rounded-full shadow-lg"
+                                                                            animate={{
+                                                                                left: pres.isPresented ? '30px' : '4px'
+                                                                            }}
+                                                                            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                                                        />
+                                                                    </button>
+                                                                    <span className={`text-xs font-bold uppercase min-w-[80px] ${pres.isPresented ? 'text-emerald-400' : 'text-red-400'
+                                                                        }`}>
+                                                                        {pres.isPresented ? 'Presentado' : 'Pendiente'}
                                                                     </span>
-                                                                    <ChevronRight size={20} className="text-slate-600 group-hover:text-gold-400 group-hover:translate-x-1 transition-all" />
+                                                                    <ChevronRight
+                                                                        size={20}
+                                                                        className="text-slate-600 group-hover:text-gold-400 group-hover:translate-x-1 transition-all cursor-pointer"
+                                                                        onClick={() => navigate(pres.path)}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         ))
