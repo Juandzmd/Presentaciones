@@ -88,8 +88,8 @@ COMPROMISED: 2048 37:e4:6a... root@metasploitable`,
         <button
             onClick={onClick}
             className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 w-full md:w-auto text-left ${active
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                 }`}
         >
             <Icon size={18} />
@@ -490,7 +490,7 @@ mysql_secure_installation`} />
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-slate-200 flex flex-col md:flex-row font-sans">
+        <div className="presentation-container min-h-screen bg-[#0f172a] text-slate-200 flex flex-col md:flex-row font-sans">
             {/* Styles for scrollbar injection */}
             <style>{`
                 ::-webkit-scrollbar { width: 8px; }
