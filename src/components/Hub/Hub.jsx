@@ -67,7 +67,8 @@ const initialSubjects = [
         color: 'from-red-500 to-orange-500',
         image: '/Presentaciones/assets/cards/security.png',
         presentations: [
-            { id: 'ev4', name: 'Evaluación 4: Auditoría de Seguridad', path: '/2025-2/ASY6131/ev4', date: 'Nov 2025', isPresented: true }
+            { id: 'ev4', name: 'Evaluación 4: Auditoría de Seguridad', path: '/2025-2/ASY6131/ev4', date: 'Nov 2025', isPresented: true },
+            { id: 'etf', name: 'ETF: Caso TU AUTO - Ciberseguridad', path: '/2025-2/ASY6131/etf', date: 'Dic 2025', isPresented: false }
         ]
     }
 ];
