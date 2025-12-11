@@ -293,20 +293,17 @@ const TuAutoETF = () => {
                 <div className="relative rounded-xl overflow-hidden border-2 border-red-500/30 shadow-2xl shadow-red-500/10">
                     <div className="bg-gray-800 px-4 py-2 flex items-center gap-2 border-b border-gray-700">
                         <Video size={16} className="text-red-400" />
-                        <span className="text-gray-400 text-sm font-mono">demo_vsftpd_exploit.mp4</span>
+                        <span className="text-gray-400 text-sm font-mono">exploit_demo.mp4</span>
                     </div>
-                    <div className="aspect-video bg-gray-900 flex flex-col items-center justify-center p-8">
-                        <Video size={64} className="text-gray-600 mb-4" />
-                        <p className="text-gray-500 text-center">Video de demostración</p>
-                        <p className="text-gray-600 text-sm text-center mt-2">
-                            Reemplazar con el archivo de video correspondiente
-                        </p>
-                        {/* Uncomment and update src when video is available
-                        <video controls className="w-full h-full">
-                            <source src="ruta_de_tu_video.mp4" type="video/mp4" />
+                    <div className="aspect-video bg-gray-900 flex flex-col items-center justify-center p-0">
+                        <video
+                            controls
+                            className="w-full h-full object-contain"
+                            poster="https://i.imgur.com/ljV9B8c.jpeg"
+                        >
+                            <source src="https://i.imgur.com/q4ylbHy.mp4" type="video/mp4" />
                             Tu navegador no soporta video HTML5.
                         </video>
-                        */}
                     </div>
                 </div>
                 <p className="text-gray-500 text-sm text-center mt-4">
@@ -496,8 +493,8 @@ const TuAutoETF = () => {
                                 key={slide.id}
                                 onClick={() => { setCurrentSlide(index); setIsMenuOpen(false); }}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${currentSlide === index
-                                        ? 'bg-red-500/10 text-red-400 border border-red-500/30'
-                                        : 'text-gray-400 hover:bg-gray-800'
+                                    ? 'bg-red-500/10 text-red-400 border border-red-500/30'
+                                    : 'text-gray-400 hover:bg-gray-800'
                                     }`}
                             >
                                 <slide.icon size={18} />
@@ -537,8 +534,8 @@ const TuAutoETF = () => {
                                 key={slide.id}
                                 onClick={() => setCurrentSlide(index)}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all mb-1 ${currentSlide === index
-                                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
-                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                                    ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                                     }`}
                             >
                                 <slide.icon size={18} />
@@ -574,8 +571,8 @@ const TuAutoETF = () => {
                                 onClick={prevSlide}
                                 disabled={currentSlide === 0}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${currentSlide === 0
-                                        ? 'text-gray-600 cursor-not-allowed'
-                                        : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                                    ? 'text-gray-600 cursor-not-allowed'
+                                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                     }`}
                             >
                                 <ChevronLeft size={20} />
@@ -588,8 +585,8 @@ const TuAutoETF = () => {
                                         key={index}
                                         onClick={() => setCurrentSlide(index)}
                                         className={`w-2 h-2 rounded-full transition-all ${currentSlide === index
-                                                ? 'bg-red-500 w-6'
-                                                : 'bg-gray-600 hover:bg-gray-500'
+                                            ? 'bg-red-500 w-6'
+                                            : 'bg-gray-600 hover:bg-gray-500'
                                             }`}
                                     />
                                 ))}
@@ -599,8 +596,8 @@ const TuAutoETF = () => {
                                 onClick={nextSlide}
                                 disabled={currentSlide === slides.length - 1}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${currentSlide === slides.length - 1
-                                        ? 'text-gray-600 cursor-not-allowed'
-                                        : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                                    ? 'text-gray-600 cursor-not-allowed'
+                                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                     }`}
                             >
                                 <span className="hidden sm:inline">Siguiente</span>
