@@ -8,29 +8,7 @@ const SeguridadEv4 = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
 
-    // Load chatbot
-    useEffect(() => {
-        // Load the chatbot plugin script
-        const script1 = document.createElement('script');
-        script1.src = 'https://app.chatgptbuilder.io/webchat/plugin.js?v=6';
-        script1.async = true;
-        document.body.appendChild(script1);
-
-        // Setup chatbot after plugin loads
-        script1.onload = () => {
-            const script2 = document.createElement('script');
-            script2.innerHTML = `ktt10.setup({id:"z8Tn7uNnAfNPfIPvsVrY",accountId:"1754827",color:"#0777FF"})`;
-            document.body.appendChild(script2);
-        };
-
-        // Cleanup on unmount
-        return () => {
-            document.body.removeChild(script1);
-            // Remove chatbot widget if exists
-            const chatWidget = document.querySelector('[id^="ktt10"]');
-            if (chatWidget) chatWidget.remove();
-        };
-    }, []);
+    // Chatbot removed per user request
 
     // --- DATA ---
     const vulnData = [
