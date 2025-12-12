@@ -7,6 +7,8 @@ import Profile from './components/Profile/Profile';
 import Projects from './components/Projects/Projects';
 import ConstructionPage from './components/Shared/Construction';
 
+import KentFoodsETF from './presentations/2025-2/BIY6121/ETF';
+
 function App() {
   return (
     <Routes>
@@ -19,6 +21,9 @@ function App() {
       {/* Presentations */}
       <Route path="/2025-2/ASY6131/ev4" element={<SeguridadEv4 />} />
       <Route path="/2025-2/ASY6131/etf" element={<TuAutoETF />} />
+
+      {/* BI Presentations */}
+      <Route path="/2025-2/BIY6121/etf" element={<KentFoodsETF />} />
     </Routes>
   );
 }

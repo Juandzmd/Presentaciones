@@ -48,7 +48,9 @@ const initialSubjects = [
         icon: Monitor,
         color: 'from-cyan-500 to-blue-500',
         image: '/Presentaciones/assets/cards/ai.png',
-        presentations: []
+        presentations: [
+            { id: 'etf', name: 'ETF: Caso Kent Foods - BI', path: '/2025-2/BIY6121/etf', date: 'Dic 2025', isPresented: false }
+        ]
     },
     {
         id: 'MLY0100',
