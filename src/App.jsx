@@ -8,6 +8,7 @@ import Projects from './components/Projects/Projects';
 import ConstructionPage from './components/Shared/Construction';
 
 import KentFoodsETF from './presentations/2025-2/BIY6121/ETF';
+import MonopolyMLETF from './presentations/2025-2/MLY0100/ETF';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
 
       {/* BI Presentations */}
       <Route path="/2025-2/BIY6121/etf" element={<KentFoodsETF />} />
+
+      {/* ML Presentations */}
+      <Route path="/2025-2/MLY0100/etf" element={<MonopolyMLETF />} />
     </Routes>
   );
 }

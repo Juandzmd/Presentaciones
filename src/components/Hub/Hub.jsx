@@ -59,7 +59,9 @@ const initialSubjects = [
         icon: Brain,
         color: 'from-violet-500 to-purple-500',
         image: '/Presentaciones/assets/cards/ai.png',
-        presentations: []
+        presentations: [
+            { id: 'etf', name: 'ETF: Caso Monopoly - ML', path: '/2025-2/MLY0100/etf', date: 'Dic 2025', isPresented: false }
+        ]
     },
     {
         id: 'ASY6131',
