@@ -19,7 +19,7 @@ const MonopolyMLPresentation = () => {
         { id: 'classification', title: 'Resultados Clasificación', icon: Users },
         { id: 'regression', title: 'Resultados Regresión', icon: TrendingUp },
         { id: 'segmentation', title: 'Segmentación', icon: PieChart },
-        { id: 'conclusions', title: 'Conclusiones', icon: Award }
+        { id: 'conclusions', title: 'Conclusiones Finales', icon: Award }
     ];
 
     const nextSlide = () => setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1));
@@ -305,6 +305,7 @@ const MonopolyMLPresentation = () => {
                         <img
                             src="https://i.imgur.com/oPl4BXj.png"
                             alt="Matriz de Confusión"
+                            referrerPolicy="no-referrer"
                             className="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity"
                         />
                     </div>
@@ -392,7 +393,7 @@ const MonopolyMLPresentation = () => {
                             <TrendingUp size={18} className="text-purple-400" /> Método del Codo
                         </h3>
                         <div className="rounded-lg overflow-hidden border border-gray-600">
-                            <img src="https://i.imgur.com/RY1uICj.png" alt="Método del Codo" className="w-full h-48 object-cover hover:object-contain transition-all duration-300 bg-white" />
+                            <img src="https://i.imgur.com/RY1uICj.png" alt="Método del Codo" referrerPolicy="no-referrer" className="w-full h-48 object-cover hover:object-contain transition-all duration-300 bg-white" />
                         </div>
                         <p className="text-xs text-gray-400 mt-2">Punto de inflexión óptimo identificado en K=3 clusters.</p>
                     </div>
@@ -444,11 +445,12 @@ const MonopolyMLPresentation = () => {
         <div className="h-full overflow-y-auto p-6 md:p-12 animate-fade-in bg-[#1a1a2e]">
             <SectionHeader title="Integración y Conclusiones del Negocio" subtitle="Impacto Estratégico" />
 
-            <div className="flex flex-col items-center justify-center h-[calc(100%-100px)]">
+            <div className="flex flex-col items-center justify-center">
                 <div className="w-full max-w-4xl bg-gray-800/50 p-2 rounded-xl border border-gray-700 shadow-2xl mb-8">
                     <img
                         src="https://i.imgur.com/zX16utS.png"
                         alt="Integración del Negocio"
+                        referrerPolicy="no-referrer"
                         className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform duration-500"
                     />
                 </div>
