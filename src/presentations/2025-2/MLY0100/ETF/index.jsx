@@ -18,7 +18,8 @@ const MonopolyMLPresentation = () => {
         { id: 'modeling', title: 'Enfoque de Modelado', icon: Brain },
         { id: 'classification', title: 'Resultados Clasificación', icon: Users },
         { id: 'regression', title: 'Resultados Regresión', icon: TrendingUp },
-        { id: 'segmentation', title: 'Segmentación (Clustering)', icon: PieChart }
+        { id: 'segmentation', title: 'Segmentación', icon: PieChart },
+        { id: 'conclusions', title: 'Conclusiones', icon: Award }
     ];
 
     const nextSlide = () => setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1));
@@ -90,7 +91,7 @@ const MonopolyMLPresentation = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <div className="bg-purple-900/10 rounded-xl p-8 border border-purple-500/20 shadow-lg">
-                     <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                         <Target className="text-purple-400" /> El Problema
                     </h3>
                     <p className="text-gray-300 leading-relaxed text-lg mb-4">
@@ -103,7 +104,7 @@ const MonopolyMLPresentation = () => {
 
                 <div className="space-y-4">
                     <h3 className="text-xl font-bold text-white mb-4">Objetivos Específicos</h3>
-                    
+
                     <div className="flex items-start gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-red-500/50 transition-colors">
                         <div className="p-3 bg-red-500/20 rounded-lg shrink-0">
                             <Users className="text-red-400" size={24} />
@@ -115,7 +116,7 @@ const MonopolyMLPresentation = () => {
                     </div>
 
                     <div className="flex items-start gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-500/50 transition-colors">
-                         <div className="p-3 bg-green-500/20 rounded-lg shrink-0">
+                        <div className="p-3 bg-green-500/20 rounded-lg shrink-0">
                             <TrendingUp className="text-green-400" size={24} />
                         </div>
                         <div>
@@ -125,7 +126,7 @@ const MonopolyMLPresentation = () => {
                     </div>
 
                     <div className="flex items-start gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-blue-500/50 transition-colors">
-                         <div className="p-3 bg-blue-500/20 rounded-lg shrink-0">
+                        <div className="p-3 bg-blue-500/20 rounded-lg shrink-0">
                             <PieChart className="text-blue-400" size={24} />
                         </div>
                         <div>
@@ -135,7 +136,7 @@ const MonopolyMLPresentation = () => {
                     </div>
                 </div>
             </div>
-             <div className="mt-8 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50 text-center italic text-gray-500">
+            <div className="mt-8 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50 text-center italic text-gray-500">
                 "No buscamos solo predecir números, sino resolver problemas de negocio reales."
             </div>
         </div>
@@ -146,10 +147,10 @@ const MonopolyMLPresentation = () => {
             <SectionHeader title="Comprensión y Preparación de Datos" subtitle="Calidad de Datos y Limpieza" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div className="space-y-6">
+                <div className="space-y-6">
                     <div className="bg-red-900/10 p-6 rounded-xl border border-red-500/20">
                         <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                             <X className="text-red-400" /> Desafíos Encontrados
+                            <X className="text-red-400" /> Desafíos Encontrados
                         </h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
@@ -163,7 +164,7 @@ const MonopolyMLPresentation = () => {
                                 <span className="w-2 h-2 mt-2 rounded-full bg-red-400 shrink-0" />
                                 <div>
                                     <strong className="text-gray-200 block">Formato Decimal Erróneo</strong>
-                                    <p className="text-gray-400 text-sm">Uso de comas (,) en lugar de puntos (.) causando que variables numéricas se lean como texto (Object -> Float).</p>
+                                    <p className="text-gray-400 text-sm">Uso de comas (,) en lugar de puntos (.) causando que variables numéricas se lean como texto (Object -&gt; Float).</p>
                                 </div>
                             </li>
                         </ul>
@@ -173,10 +174,10 @@ const MonopolyMLPresentation = () => {
                 <div className="space-y-6">
                     <div className="bg-green-900/10 p-6 rounded-xl border border-green-500/20">
                         <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                             <CheckCircle className="text-green-400" /> Tratamiento Aplicado
+                            <CheckCircle className="text-green-400" /> Tratamiento Aplicado
                         </h3>
                         <div className="space-y-4">
-                             <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700">
+                            <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700">
                                 <span className="text-green-400 font-bold text-sm uppercase tracking-wide">Limpieza</span>
                                 <p className="text-white mt-1">Eliminación de filas corruptas y conversión de tipos.</p>
                             </div>
@@ -200,7 +201,7 @@ const MonopolyMLPresentation = () => {
             <SectionHeader title="Enfoque de Modelado" subtitle="Diferenciando Tareas Supervisadas" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8 items-center h-[calc(100%-150px)]">
-                
+
                 {/* Classification */}
                 <div className="h-full flex flex-col bg-gradient-to-br from-blue-900/20 to-blue-800/10 p-8 rounded-2xl border border-blue-500/30 hover:border-blue-400 transition-all hover:-translate-y-1 shadow-lg group">
                     <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
@@ -220,7 +221,7 @@ const MonopolyMLPresentation = () => {
                                 <span className="text-gray-400">Salida</span>
                                 <span className="text-blue-300 font-medium">Binaria (0 o 1)</span>
                             </div>
-                             <div className="flex justify-between items-center border-b border-blue-500/20 pb-2">
+                            <div className="flex justify-between items-center border-b border-blue-500/20 pb-2">
                                 <span className="text-gray-400">Modelo</span>
                                 <span className="text-blue-300 font-medium">Regresión Logística</span>
                             </div>
@@ -238,7 +239,7 @@ const MonopolyMLPresentation = () => {
                         <p className="text-gray-300 text-lg">
                             ¿Cuál es la antigüedad estimada?
                         </p>
-                         <div className="space-y-3">
+                        <div className="space-y-3">
                             <div className="flex justify-between items-center border-b border-purple-500/20 pb-2">
                                 <span className="text-gray-400">Objetivo</span>
                                 <span className="text-purple-300 font-medium">Predecir Valor Continuo</span>
@@ -247,7 +248,7 @@ const MonopolyMLPresentation = () => {
                                 <span className="text-gray-400">Salida</span>
                                 <span className="text-purple-300 font-medium">Número Real</span>
                             </div>
-                             <div className="flex justify-between items-center border-b border-purple-500/20 pb-2">
+                            <div className="flex justify-between items-center border-b border-purple-500/20 pb-2">
                                 <span className="text-gray-400">Modelo</span>
                                 <span className="text-purple-300 font-medium">Random Forest</span>
                             </div>
@@ -264,10 +265,10 @@ const MonopolyMLPresentation = () => {
             <SectionHeader title="Análisis de Resultados: Clasificación" subtitle="Modelo de Fuga de Clientes" />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                 <div className="space-y-8">
+                <div className="space-y-8">
                     <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
                         <h3 className="text-lg font-bold text-white mb-4">Estrategia: Manejo del Desbalance</h3>
-                         <div className="flex items-center gap-4 mb-4">
+                        <div className="flex items-center gap-4 mb-4">
                             <div className="w-full bg-gray-700 h-4 rounded-full overflow-hidden flex">
                                 <div className="bg-blue-500 w-[10%]"></div>
                                 <div className="bg-gray-500 w-[90%]"></div>
@@ -277,7 +278,7 @@ const MonopolyMLPresentation = () => {
                             Pocos casos de "Fuga" vs muchos de "No Fuga".
                         </p>
                         <div className="flex items-center gap-3">
-                             <div className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded border border-purple-500/30 text-sm font-bold">
+                            <div className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded border border-purple-500/30 text-sm font-bold">
                                 SMOTE
                             </div>
                             <span className="text-gray-300 text-sm">Sobremuestreo sintético de la clase minoritaria.</span>
@@ -290,36 +291,25 @@ const MonopolyMLPresentation = () => {
                             <p className="text-3xl font-bold text-white">Recall</p>
                             <p className="text-xs text-gray-400 mt-2">Minimizar Falsos Negativos (Fugas no detectadas)</p>
                         </div>
-                         <div className="bg-purple-900/20 p-6 rounded-xl border border-purple-500/30 text-center">
-                             <p className="text-purple-300 text-sm uppercase tracking-wide mb-2">ROC-AUC</p>
-                            <p className="text-3xl font-bold text-white">~0.60</p>
-                            <p className="text-xs text-gray-400 mt-2">Capacidad de distinción</p>
+                        <div className="bg-purple-900/20 p-6 rounded-xl border border-purple-500/30 text-center">
+                            <p className="text-purple-300 text-sm uppercase tracking-wide mb-2">ROC-AUC</p>
+                            <p className="text-3xl font-bold text-white">0.9165</p>
+                            <p className="text-xs text-gray-400 mt-2">Excelente capacidad de distinción</p>
                         </div>
                     </div>
-                 </div>
+                </div>
 
-                 <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-xl flex flex-col justify-center">
-                    <h3 className="text-xl font-bold text-white mb-6 text-center">Matriz de Confusión (Conceptual)</h3>
-                    <div className="grid grid-cols-2 gap-2 text-center">
-                        <div className="bg-green-500/20 p-4 rounded border border-green-500/30">
-                            <span className="block text-2xl font-bold text-green-400">TP</span>
-                            <span className="text-xs text-green-200">Fuga Detectada Correctamente</span>
-                        </div>
-                        <div className="bg-red-500/10 p-4 rounded border border-red-500/20 opacity-50">
-                            <span className="block text-xl font-bold text-red-300">FP</span>
-                            <span className="text-xs text-red-200">Falsa Alarma</span>
-                        </div>
-                        <div className="bg-red-500/20 p-4 rounded border border-red-500/30">
-                            <span className="block text-2xl font-bold text-red-400">FN</span>
-                            <span className="text-xs text-red-200">Fuga No Detectada (Crítico)</span>
-                        </div>
-                        <div className="bg-green-500/10 p-4 rounded border border-green-500/20 opacity-50">
-                            <span className="block text-xl font-bold text-green-300">TN</span>
-                            <span className="text-xs text-green-200">Cliente Fiel Correcto</span>
-                        </div>
+                <div className="bg-gray-800 p-4 rounded-xl border border-gray-700 shadow-xl flex flex-col justify-center items-center">
+                    <h3 className="text-xl font-bold text-white mb-4 text-center">Matriz de Confusión: Regresión Logística + SMOTE</h3>
+                    <div className="w-full max-w-sm rounded overflow-hidden shadow-lg border border-gray-600">
+                        <img
+                            src="https://i.imgur.com/oPl4BXj.png"
+                            alt="Matriz de Confusión"
+                            className="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity"
+                        />
                     </div>
-                     <p className="text-center text-gray-500 text-xs mt-6 italic">
-                        "Es más costoso perder un cliente (FN) que dar un incentivo innecesario (FP)."
+                    <p className="text-center text-gray-500 text-xs mt-4 italic">
+                        "Alta efectividad en la detección de casos positivos (Fuga) gracias al balanceo con SMOTE."
                     </p>
                 </div>
             </div>
@@ -345,13 +335,13 @@ const MonopolyMLPresentation = () => {
                     </div>
 
                     <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
-                         <h3 className="text-lg font-bold text-white mb-4">Optimización de Hiperparámetros</h3>
+                        <h3 className="text-lg font-bold text-white mb-4">Optimización de Hiperparámetros</h3>
                         <div className="space-y-2">
-                             <div className="flex justify-between border-b border-gray-700 pb-2">
+                            <div className="flex justify-between border-b border-gray-700 pb-2">
                                 <span className="text-gray-400">max_depth</span>
                                 <span className="text-purple-300 font-mono">10</span>
                             </div>
-                             <div className="flex justify-between border-b border-gray-700 pb-2">
+                            <div className="flex justify-between border-b border-gray-700 pb-2">
                                 <span className="text-gray-400">n_jobs</span>
                                 <span className="text-purple-300 font-mono">-1 (Todo CPU)</span>
                             </div>
@@ -362,13 +352,29 @@ const MonopolyMLPresentation = () => {
                     </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-900/20 to-gray-800 p-8 rounded-xl border border-green-500/30 text-center flex flex-col items-center justify-center h-64">
-                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-4 animate-pulse">
-                        <BarChart2 className="text-green-400" size={40} />
+                <div className="bg-gradient-to-br from-green-900/20 to-gray-800 p-8 rounded-xl border border-green-500/30 text-center flex flex-col items-center justify-center space-y-6">
+                    <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-2 animate-pulse">
+                        <BarChart2 className="text-green-400" size={32} />
                     </div>
-                    <p className="text-gray-400 text-sm uppercase tracking-wide mb-2">R2 Score</p>
-                    <h2 className="text-5xl font-bold text-white mb-2">0.35</h2>
-                    <p className="text-green-300 text-sm font-medium">Mejor desempeño que modelo base</p>
+
+                    <div className="grid grid-cols-3 gap-6 w-full">
+                        <div className="text-center">
+                            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">R2 Score</p>
+                            <h2 className="text-3xl font-bold text-white">0.6025</h2>
+                        </div>
+                        <div className="text-center border-l border-gray-700">
+                            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">MAE</p>
+                            <h2 className="text-3xl font-bold text-white">5.97</h2>
+                        </div>
+                        <div className="text-center border-l border-gray-700">
+                            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">RMSE</p>
+                            <h2 className="text-3xl font-bold text-white">8.39</h2>
+                        </div>
+                    </div>
+
+                    <p className="text-green-300 text-sm font-medium border-t border-gray-700 pt-4 w-full">
+                        Modelo optimizado con Random Forest
+                    </p>
                 </div>
             </div>
         </div>
@@ -376,49 +382,95 @@ const MonopolyMLPresentation = () => {
 
     const SegmentationSlide = () => (
         <div className="h-full overflow-y-auto p-6 md:p-12 animate-fade-in bg-[#1a1a2e]">
-             <SectionHeader title="Segmentación de Clientes" subtitle="Clustering con K-Means (No Supervisado)" />
+            <SectionHeader title="Segmentación de Clientes: Resultados" subtitle="Clustering con K-Means" />
 
-             <div className="flex flex-col h-[calc(100%-120px)]">
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                      <div className="bg-gray-800 p-5 rounded-xl border border-gray-700 text-center">
-                        <h3 className="text-purple-400 font-bold mb-2">Cluster 0</h3>
-                        <div className="w-12 h-12 bg-purple-500/20 rounded-full mx-auto mb-3 flex items-center justify-center">
-                            <Users size={20} className="text-purple-300" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full pb-20">
+                {/* Left Column: Stats & Elbow Method */}
+                <div className="space-y-6">
+                    <div className="bg-gray-800 p-4 rounded-xl border border-gray-700">
+                        <h3 className="text-white font-bold mb-3 flex items-center gap-2">
+                            <TrendingUp size={18} className="text-purple-400" /> Método del Codo
+                        </h3>
+                        <div className="rounded-lg overflow-hidden border border-gray-600">
+                            <img src="https://i.imgur.com/RY1uICj.png" alt="Método del Codo" className="w-full h-48 object-cover hover:object-contain transition-all duration-300 bg-white" />
                         </div>
-                        <p className="text-gray-300 text-sm">Bajo Riesgo / Alta Antigüedad</p>
-                        <span className="text-xs text-gray-500 mt-2 block">"Clientes Leales"</span>
-                      </div>
+                        <p className="text-xs text-gray-400 mt-2">Punto de inflexión óptimo identificado en K=3 clusters.</p>
+                    </div>
 
-                      <div className="bg-gray-800 p-5 rounded-xl border border-gray-700 text-center relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-1 bg-red-500/20 rounded-bl-lg">
-                            <Target size={12} className="text-red-400" />
+                    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
+                        <h3 className="text-white font-bold mb-4">Distribución de Clientes</h3>
+                        <div className="space-y-3">
+                            <div className="flex justify-between items-center p-3 bg-purple-900/20 rounded border-l-4 border-purple-500">
+                                <span className="text-gray-300">Cluster 0</span>
+                                <span className="text-white font-mono font-bold">3,722</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 bg-red-900/20 rounded border-l-4 border-red-500">
+                                <span className="text-gray-300">Cluster 1</span>
+                                <span className="text-white font-mono font-bold">5,696</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 bg-blue-900/20 rounded border-l-4 border-blue-500">
+                                <span className="text-gray-300">Cluster 2 (Mayoritario)</span>
+                                <span className="text-white font-mono font-bold">41,707</span>
+                            </div>
                         </div>
-                        <h3 className="text-red-400 font-bold mb-2">Cluster 1</h3>
-                        <div className="w-12 h-12 bg-red-500/20 rounded-full mx-auto mb-3 flex items-center justify-center">
-                             <Users size={20} className="text-red-300" />
-                        </div>
-                        <p className="text-gray-300 text-sm">Alto Riesgo / Nuevos</p>
-                        <span className="text-xs text-gray-500 mt-2 block">"Atención Inmediata"</span>
-                      </div>
+                    </div>
+                </div>
 
-                      <div className="bg-gray-800 p-5 rounded-xl border border-gray-700 text-center">
-                        <h3 className="text-blue-400 font-bold mb-2">Cluster 2</h3>
-                         <div className="w-12 h-12 bg-blue-500/20 rounded-full mx-auto mb-3 flex items-center justify-center">
-                            <Users size={20} className="text-blue-300" />
-                        </div>
-                        <p className="text-gray-300 text-sm">Promedio</p>
-                         <span className="text-xs text-gray-500 mt-2 block">"Mantener"</span>
-                      </div>
-                 </div>
+                {/* Right Column: Interpretation */}
+                <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 flex flex-col justify-center">
+                    <PieChart size={48} className="text-purple-400 mb-6" />
+                    <h3 className="text-2xl font-light text-white mb-4">Interpretación de Segmentos</h3>
 
-                 <div className="flex-1 bg-gray-800/50 rounded-xl border border-gray-700 p-6 flex flex-col justify-center items-center text-center">
-                     <PieChart size={64} className="text-gray-600 mb-4 opacity-50" />
-                     <h3 className="text-xl font-light text-white mb-2">Estrategia Diferenciada</h3>
-                     <p className="text-gray-400 max-w-2xl">
-                         "La segmentación permite pasar de estrategias masivas ineficientes a campañas personalizadas según el perfil de riesgo y valor del cliente."
-                     </p>
-                 </div>
-             </div>
+                    <div className="space-y-6">
+                        <div className="pl-4 border-l-2 border-purple-500">
+                            <strong className="text-purple-300 block text-lg">Cluster 0 (Minoritario)</strong>
+                            <p className="text-gray-400">Grupo selecto. Posiblemente clientes de alto valor o nicho específico.</p>
+                        </div>
+                        <div className="pl-4 border-l-2 border-red-500">
+                            <strong className="text-red-300 block text-lg">Cluster 1 (Riesgo/Oportunidad)</strong>
+                            <p className="text-gray-400">Segmento mediano que requiere atención diferenciada para evitar fuga o aumentar valor.</p>
+                        </div>
+                        <div className="pl-4 border-l-2 border-blue-500">
+                            <strong className="text-blue-300 block text-lg">Cluster 2 (Masivo)</strong>
+                            <p className="text-gray-400">Representa la base principal de clientes ("Core Business"). Las estrategias aquí tienen el mayor impacto en volumen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+    const ConclusionsSlide = () => (
+        <div className="h-full overflow-y-auto p-6 md:p-12 animate-fade-in bg-[#1a1a2e]">
+            <SectionHeader title="Integración y Conclusiones del Negocio" subtitle="Impacto Estratégico" />
+
+            <div className="flex flex-col items-center justify-center h-[calc(100%-100px)]">
+                <div className="w-full max-w-4xl bg-gray-800/50 p-2 rounded-xl border border-gray-700 shadow-2xl mb-8">
+                    <img
+                        src="https://i.imgur.com/zX16utS.png"
+                        alt="Integración del Negocio"
+                        className="w-full rounded-lg shadow-lg hover:scale-[1.02] transition-transform duration-500"
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl border border-gray-700 hover:border-green-500/50 transition-colors">
+                        <CheckCircle className="text-green-400 mb-3" size={24} />
+                        <h4 className="text-white font-bold mb-2">Decisiones Informadas</h4>
+                        <p className="text-sm text-gray-400">Pasamos de la intuición a la certeza matemática con un modelo de clasificación de alta precisión (AUC 0.91).</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors">
+                        <Target className="text-blue-400 mb-3" size={24} />
+                        <h4 className="text-white font-bold mb-2">Focalización</h4>
+                        <p className="text-sm text-gray-400">La segmentación identificó claramente el "Core" del negocio (Cluster 2) vs segmentos de oportunidad.</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-colors">
+                        <Award className="text-purple-400 mb-3" size={24} />
+                        <h4 className="text-white font-bold mb-2">Valor Agregado</h4>
+                        <p className="text-sm text-gray-400">Integración exitosa de técnicas supervisadas y no supervisadas para una visión 360 del cliente.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 
@@ -441,6 +493,7 @@ const MonopolyMLPresentation = () => {
             case 'classification': return <ClassificationResultsSlide />;
             case 'regression': return <RegressionSlide />;
             case 'segmentation': return <SegmentationSlide />;
+            case 'conclusions': return <ConclusionsSlide />;
             default: return <CoverSlide />;
         }
     };
@@ -491,7 +544,7 @@ const MonopolyMLPresentation = () => {
                 {/* Desktop Sidebar */}
                 <aside className="hidden md:flex w-72 bg-[#1a1a2e] border-r border-white/5 flex-col relative z-20 shadow-2xl">
                     <div className="p-6 border-b border-white/5 bg-[#16213e]">
-                         <button
+                        <button
                             onClick={() => navigate('/')}
                             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-xs font-semibold uppercase tracking-wider mb-8 group"
                         >
